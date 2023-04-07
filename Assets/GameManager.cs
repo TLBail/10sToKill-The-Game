@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
 
     private static GameManager instance;
     
-    public Action onReverseTime;
     public static GameManager Instance
     {
         get
@@ -22,18 +21,53 @@ public class GameManager : MonoBehaviour
     private void Awake() {
         DontDestroyOnLoad(gameObject);
     }
-
-    private bool _isReversing = false;
-    public bool isReversing
+    
+    
+    public Action onPlayingRecordChange;
+    private int _isPlayingRecord = 0;
+    public int isPlayingRecord
     {
         get
         {
-            return _isReversing;
+            return _isPlayingRecord;
         }
         set
         {
-            _isReversing = value;
-            onReverseTime?.Invoke();   
+            _isPlayingRecord = value;
+            onPlayingRecordChange?.Invoke();   
         }
     }
+    
+    public Action onRecordTime;
+    private bool _isRecording = false;
+    public float timeRecorded = 0f;
+
+    private void FixedUpdate() {
+        if (!isRecording) {
+            timeIndex += isPlayingRecord;
+            if (timeIndex < 0) {
+                timeIndex = 0;
+            }
+        }
+    }
+
+
+    public bool isRecording
+    {
+        get
+        {
+            return _isRecording;
+        }
+        set
+        {
+            _isRecording = value;
+            onRecordTime?.Invoke();
+            if (_isRecording == false) {
+                timeIndex = 0;
+            }
+        }
+    }
+    
+    public int timeIndex = 0;
+
 }

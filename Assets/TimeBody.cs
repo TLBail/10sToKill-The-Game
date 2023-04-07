@@ -12,49 +12,56 @@ public class TimeBody : MonoBehaviour
 
     private void Start() {
         gameManager = GameManager.Instance;
-        gameManager.onReverseTime += onReverseTime;
+        gameManager.onRecordTime += onRecordTime;
         pointInTimes = new List<PointInTime>();
         rb = GetComponent<Rigidbody>();
+        onRecordTime();
     }
 
 
     private void FixedUpdate() {
-        if (gameManager.isReversing) {
-            Rewind();
-        } else {
+        if (gameManager.isRecording) {
             Record();
+        } else {
+            updateBody();
         }
+
     }
 
     private void Record() {
+        if(!gameManager.isRecording) return;
+        if (pointInTimes.Count > Math.Round((1f / Time.fixedDeltaTime)) * 20f) {
+            pointInTimes.RemoveAt(pointInTimes.Count - 1);
+        }
         pointInTimes.Insert(0, new PointInTime(transform.position, transform.rotation));
+
     }
 
-    private void Rewind() {
-        if (pointInTimes.Count == 0) {
-            gameManager.isReversing = false;
+    private void updateBody() {
+        if (gameManager.timeIndex >= pointInTimes.Count -1) {
+            gameManager.isPlayingRecord = 0;
+            gameManager.timeIndex--;
             return;
         }
 
-        PointInTime pointInTime = pointInTimes[0];
+        PointInTime pointInTime = pointInTimes[gameManager.timeIndex];
         transform.position = pointInTime.position;
         transform.rotation = pointInTime.rotation;
-        pointInTimes.RemoveAt(0);
     }
 
-    private void onReverseTime() {
-        if (gameManager.isReversing) {
-            StartRewinding();
+    private void onRecordTime() {
+        if (gameManager.isRecording) {
+            StartRecording();
         } else {
-            StopRewinding();
+            StopRecording();
         }   
     }
 
-    private void StopRewinding() {
-        rb.isKinematic = false;
+    private void StopRecording() {
+        rb.isKinematic = true;
     }
 
-    private void StartRewinding() {
-        rb.isKinematic = true;
+    private void StartRecording() {
+        rb.isKinematic = false;
     }
 }
