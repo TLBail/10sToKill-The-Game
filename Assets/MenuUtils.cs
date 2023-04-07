@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuUtils : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class MenuUtils : MonoBehaviour
    private TMPro.TMP_Text textIsReversing;
 
    [SerializeField] private TMPro.TMP_Text textIsRecording;
+   [SerializeField] private Slider slider;
    
    private void Start() {
        gameManager = GameManager.Instance;
@@ -28,6 +30,10 @@ public class MenuUtils : MonoBehaviour
 
    public void playPauseRecord() {
        gameManager.isPlayingRecord = gameManager.isPlayingRecord != 0 ? 0 : -1;
+   }
+
+   public void setPlayingRecordSpeed() {
+       gameManager.isPlayingRecord = (int)slider.value;
    }
    
    
