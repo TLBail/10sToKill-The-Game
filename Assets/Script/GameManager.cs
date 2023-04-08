@@ -9,6 +9,11 @@ public class GameManager : MonoBehaviour
 
     private static GameManager instance;
     
+    [SerializeField]
+    public List<GameEvent> events = new List<GameEvent>();
+    public Vector3 impactPosition;
+
+    
     public static GameManager Instance
     {
         get
@@ -26,7 +31,12 @@ public class GameManager : MonoBehaviour
 
     
     private void Start() {
+    }
+
+    public void StartShooting() {
+        
         StartCoroutine(DoSlowMotion());
+        
     }
 
     [SerializeField] private float _slodownFactor = 0.05f;
@@ -34,7 +44,7 @@ public class GameManager : MonoBehaviour
         slowdowFactor = 0.05f;
         
         isRecording = true;
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(10f);
         isRecording = false;
     }
     
@@ -71,6 +81,7 @@ public class GameManager : MonoBehaviour
     public Action onRecordTime;
     private bool _isRecording = false;
     public float timeRecorded = 0f;
+    
 
     private void FixedUpdate() {
         if (!isRecording) {
@@ -99,5 +110,6 @@ public class GameManager : MonoBehaviour
     }
     
     public int timeIndex = 0;
+
 
 }
