@@ -10,7 +10,11 @@ public class CollidingScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.CompareTag(tag)) {
-            actionOnCollision?.Invoke();
+            if (actionOnCollision != null) {
+                actionOnCollision?.Invoke();
+            } else {
+                GameManager.Instance.isRecording = false;
+            }
         }
     }
 
