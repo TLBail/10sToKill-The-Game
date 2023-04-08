@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -10,7 +11,6 @@ public class MenuUtils : MonoBehaviour
    [SerializeField]
    private TMPro.TMP_Text textIsReversing;
 
-   [SerializeField] private TMPro.TMP_Text textIsRecording;
    [FormerlySerializedAs("slider")] [SerializeField] private Slider sliderTime;
    [SerializeField] private Slider sliderSlowdownFactor;
    
@@ -22,8 +22,7 @@ public class MenuUtils : MonoBehaviour
    }
 
    private void UpdateText() {
-       textIsReversing.text = gameManager.isPlayingRecord == -1 ? "Time is Reversing" : "Time is not Reversing";
-       textIsRecording.text = gameManager.isRecording ? "Time is Recording" : "Time is not Recording";
+       textIsReversing.text = gameManager.isRecording  ? "live" : "past";
    }
 
    public void switchTimeReversing() {
@@ -47,5 +46,9 @@ public class MenuUtils : MonoBehaviour
        gameManager.isRecording = !gameManager.isRecording;
    }
    
+   
+   public void restartGame() {
+       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+   }
    
 }
