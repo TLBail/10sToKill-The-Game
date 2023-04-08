@@ -5,9 +5,12 @@ using UnityEngine;
 public class GameEventGrêve : GameEvent
 {
     private const string shootingPlaceAfterHouse = "afterHouse";
+
+    public GameEventGrêve() {
+        eventName = "Grêve";
+    }
     public override void init(EventManager eventManager)
     {
-        eventName = "Grêve";
         SubEvents = new List<SubEvent>()
         {
             new SubEvent()
@@ -15,7 +18,6 @@ public class GameEventGrêve : GameEvent
                 Position = new Vector3(17, 15, 37f),
                 Action = () =>
                 {
-                    Debug.Log("salut");
                     eventManager.setImpactPosition(shootingPlaceAfterHouse);
                 }
             }

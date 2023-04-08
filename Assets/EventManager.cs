@@ -135,6 +135,7 @@ public class EventManager : MonoBehaviour
 
     public void setImpactPosition(string impactName) {
         GameManager.Instance.impactPosition = impactPositionDictionary[impactName].position;
+        bulletController.updateVector();
     }
     
 
