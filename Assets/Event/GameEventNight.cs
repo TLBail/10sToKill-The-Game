@@ -8,7 +8,6 @@ public class GameEventNight : GameEvent
     public GameEventNight()
     {
         eventName = "Nuits";
-        positionImpactName = "foser";
     }
     
     
@@ -16,6 +15,7 @@ public class GameEventNight : GameEvent
     {
         SubEvents = new List<SubEvent>()
         {
+            
             new SubEvent()
             {
                 Position = new Vector3(0, 0, 62f),
@@ -23,6 +23,10 @@ public class GameEventNight : GameEvent
                 {
                     eventManager.stopRecord();
                 }
+            },
+            new SubEvent()
+            {
+                Position = new Vector3()
             }
         };
     }
@@ -31,6 +35,8 @@ public class GameEventNight : GameEvent
     public override void triggerEvent(EventManager eventManager)
     {
         eventManager.setNight();
-        
+        eventManager.setImpactPosition("foser");
+        eventManager.setActiveFamousGameObject("billy",false);
+        eventManager.setActiveFamousGameObject("taxi",false);
     }
 }

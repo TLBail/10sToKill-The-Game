@@ -12,6 +12,8 @@ public class ImpactPosition
     public Transform transform;
 }
 
+
+
 public class EventManager : MonoBehaviour
 {
 
@@ -26,16 +28,31 @@ public class EventManager : MonoBehaviour
     [SerializeField] private Transform defaultImpactPosition;
     [SerializeField] private BulletController bulletController;
     [SerializeField] private Object prefabCollisionWall;
-    
+    [SerializeField] private List<GameObject> gameObjectsFamous;
+
+    public Dictionary<string, GameObject> famousGameObjectDictionary = new Dictionary<string, GameObject>();
     public Dictionary<string, Transform> impactPositionDictionary = new Dictionary<string, Transform>();
 
-    public List<GameEvent> eventsAvailable = new List<GameEvent>()
+    private List<GameEvent> eventsAvailable = new List<GameEvent>()
     {
-        new GameEventNight()
+        new GameEventNight(),
+        new GameEventGrêve()
     };
     private void Start() {
         foreach (ImpactPosition impactPosition in impactPositions) {
             impactPositionDictionary.Add(impactPosition.name, impactPosition.transform);
+        }
+        foreach (GameObject gameObject in gameObjectsFamous) {
+            famousGameObjectDictionary.Add(gameObject.name, gameObject);
+        }
+
+        foreach (GameObject gameObjectFamous in gameObjectsFamous) {
+            if (gameObjectFamous.TryGetComponent(typeof(CollidingScript), out var component)) {
+                gameObjectFamous.GetComponent<CollidingScript>().actionOnCollision = () =>
+                {   
+                    stopRecord();
+                };   
+            }
         }
         
         UpdateList();
@@ -94,9 +111,6 @@ public class EventManager : MonoBehaviour
         GameManager.Instance.impactPosition = defaultImpactPosition.position; 
         foreach (GameEvent gameEvent in GameManager.Instance.events) {
             gameEvent.triggerEvent(this);
-            if (gameEvent.positionImpactName != "") {
-                GameManager.Instance.impactPosition = impactPositionDictionary[gameEvent.positionImpactName].position;
-            }
         }
         
         bulletController.updateVector();
@@ -117,5 +131,14 @@ public class EventManager : MonoBehaviour
 
     public void stopRecord() {
         GameManager.Instance.isRecording = false;
+    }
+
+    public void setImpactPosition(string impactName) {
+        GameManager.Instance.impactPosition = impactPositionDictionary[impactName].position;
+    }
+    
+
+    public void setActiveFamousGameObject(string name, bool active) {
+        famousGameObjectDictionary[name]?.SetActive(active);
     }
 }

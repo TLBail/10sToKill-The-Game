@@ -10,8 +10,7 @@ public class GameEvent
     
     
     public string eventName;
-    public string positionImpactName;
-    public List<SubEvent> SubEvents;
+    public List<SubEvent> SubEvents = new List<SubEvent>();
 
     public virtual void init(EventManager eventManager) {
         
