@@ -18,11 +18,41 @@ public class GameManager : MonoBehaviour
         private set{ instance = value;}
     }
 
+    
+    
     private void Awake() {
         DontDestroyOnLoad(gameObject);
     }
+
     
+    private void Start() {
+        StartCoroutine(DoSlowMotion());
+    }
+
+    [SerializeField] private float _slodownFactor = 0.05f;
+    IEnumerator DoSlowMotion() {
+        slowdowFactor = 0.05f;
+        
+        isRecording = true;
+        yield return new WaitForSeconds(5f);
+        isRecording = false;
+    }
     
+    public float slowdowFactor
+    {
+        get
+        {
+            return _slodownFactor;
+        }
+        set
+        {
+            _slodownFactor = value;
+            Time.timeScale = _slodownFactor;
+            Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        }
+    }
+
+
     public Action onPlayingRecordChange;
     private int _isPlayingRecord = 0;
     public int isPlayingRecord

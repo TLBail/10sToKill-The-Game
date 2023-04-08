@@ -44,6 +44,7 @@ public class TimeBody : MonoBehaviour
     }
 
     private void updateBody() {
+        if(pointInTimes.Count == 0) return;
         if (gameManager.timeIndex >= pointInTimes.Count -1) {
             gameManager.isPlayingRecord = 0;
             gameManager.timeIndex--;
