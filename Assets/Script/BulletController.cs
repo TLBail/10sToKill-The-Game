@@ -14,7 +14,12 @@ public class BulletController : MonoBehaviour
         //add force forwand bullet on rigidbody
         rigidbody = GetComponent<Rigidbody>();
     }
-    
+
+    private void FixedUpdate() {
+        if(GameManager.Instance.impactPosition.z > transform.position.z)
+            GameManager.Instance.isRecording = false;
+    }
+
     private void Update() {
         if(!rigidbody.isKinematic)
             rigidbody.velocity =  vectorTowardTarget * speed;

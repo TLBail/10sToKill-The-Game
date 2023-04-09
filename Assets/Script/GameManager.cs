@@ -30,7 +30,16 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    
+    public List<GameEvent> allGameEvents = new List<GameEvent>()
+    {
+        new GameEventNight(),
+        new GameEventGrêve(),
+        new GameEventBraquage(),
+        new GameEventEngraisAutoriser()
+    };
+
+    public List<GameEvent> selectedGameEvents = new List<GameEvent>();
+
     private void Start() {
     }
 
@@ -41,9 +50,9 @@ public class GameManager : MonoBehaviour
     }
 
     public Action slowDownFactorChange;
-    [SerializeField] private float _slodownFactor = 0.05f;
+    [SerializeField] private float _slodownFactor = 1f;
     IEnumerator DoSlowMotion() {
-        slowdowFactor = 0.05f;
+        slowdowFactor = 1f;
         
         isRecording = true;
         elpasedTime = 0f;

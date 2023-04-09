@@ -19,18 +19,9 @@ public class GameEventBraquage : GameEvent
                 {
                     
                     eventManager.famousGameObjectDictionary["coffre"].GetComponent<CoffreAi>().dropCoffre();
-                    eventManager.setImpactPosition("afterBank");
+                    eventManager.setImpactPosition("afterCoffre");
                 }
             },
-            new SubEvent()
-            {
-                Position = new Vector3(0, 0, -65f),
-                Action = () =>
-                {
-                    
-                    eventManager.famousGameObjectDictionary["explosion"].GetComponent<explosionWall>().explosion();
-                }
-            }
         };
     }
     public override void triggerEvent(EventManager eventManager)

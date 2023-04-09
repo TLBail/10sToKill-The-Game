@@ -35,9 +35,6 @@ public class EventManager : MonoBehaviour
 
     private List<GameEvent> eventsAvailable = new List<GameEvent>()
     {
-        new GameEventNight(),
-        new GameEventGrêve(),
-        new GameEventBraquage()
     };
     private void Start() {
         foreach (ImpactPosition impactPosition in impactPositions) {
@@ -59,7 +56,13 @@ public class EventManager : MonoBehaviour
         UpdateList();
     }
 
-    private void UpdateList() {
+    public void eventsForSelection(List<GameEvent> gameEvents) {
+        eventsAvailable = new List<GameEvent>(gameEvents);
+        GameManager.Instance.events.Clear();
+        UpdateList();
+    }
+
+    public void UpdateList() {
         //clear list
         foreach (var button in holderButtonEventToAdd.GetComponentsInChildren<UnityEngine.UI.Button>()) {
             Destroy(button.gameObject);
@@ -91,7 +94,6 @@ public class EventManager : MonoBehaviour
                 GameManager.Instance.events.Remove(gameEvent);
                 eventsAvailable.Add(gameEvent);
                 UpdateList();
-
             });
         }
     }
