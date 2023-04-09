@@ -18,6 +18,9 @@ public class MenuUtils : MonoBehaviour
    [SerializeField] private List<GameObject> buttonToAddEvent;
    [SerializeField] private GameObject uiSelectEvents;
    [SerializeField] private EventManager eventManager;
+   [SerializeField] private Button buttonRestart;
+
+   public float elapsedTime = 0;
    private void Start() {
        gameManager = GameManager.Instance;
        List<GameEvent> randomEvents = new List<GameEvent>();
@@ -56,7 +59,7 @@ public class MenuUtils : MonoBehaviour
        
        
    }
-
+   
    public void passButton() {
        uiSelectEvents.SetActive(true);
        eventManager.eventsForSelection(GameManager.Instance.selectedGameEvents);
@@ -65,6 +68,12 @@ public class MenuUtils : MonoBehaviour
 
    private void Update() {
        textIsReversing.text = gameManager.isRecording  ? "live : " + GameManager.Instance.elpasedTime  : "past";
+       elapsedTime += Time.deltaTime;
+       buttonRestart.interactable = elapsedTime > 10;
+   }
+
+   public void zeroElapsedTime() {
+       elapsedTime = 0;
    }
 
    public void switchTimeReversing() {

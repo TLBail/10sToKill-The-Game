@@ -9,6 +9,7 @@ public class BulletController : MonoBehaviour
     private Rigidbody rigidbody;
     [SerializeField] private float speed = 600f;
     Vector3 vectorTowardTarget;
+    [SerializeField] private GameObject bulletIsLostMessage;
     void Start()
     {
         //add force forwand bullet on rigidbody
@@ -16,8 +17,12 @@ public class BulletController : MonoBehaviour
     }
 
     private void FixedUpdate() {
-        if(GameManager.Instance.impactPosition.z > transform.position.z)
+        if (GameManager.Instance.impactPosition.z > transform.position.z) {
             GameManager.Instance.isRecording = false;
+            bulletIsLostMessage.SetActive(true);
+        }
+            
+        
     }
 
     private void Update() {

@@ -34,8 +34,9 @@ public class GameManager : MonoBehaviour
     {
         new GameEventNight(),
         new GameEventGrêve(),
+        new GameEventCoupeDuMonde(),
         new GameEventBraquage(),
-        new GameEventEngraisAutoriser()
+        new GameEventEngraisAutoriser(),
     };
 
     public List<GameEvent> selectedGameEvents = new List<GameEvent>();
@@ -57,7 +58,8 @@ public class GameManager : MonoBehaviour
         isRecording = true;
         elpasedTime = 0f;
         yield return new WaitForSeconds(10f);
-        isRecording = false;
+        if(isRecording)
+            isRecording = false;
     }
     
     public float slowdowFactor
