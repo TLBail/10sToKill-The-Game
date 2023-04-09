@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,13 +17,10 @@ public class MenuUtils : MonoBehaviour
    
    private void Start() {
        gameManager = GameManager.Instance;
-       gameManager.onPlayingRecordChange += UpdateText;
-       gameManager.onRecordTime += UpdateText;
-       UpdateText();
    }
 
-   private void UpdateText() {
-       textIsReversing.text = gameManager.isRecording  ? "live" : "past";
+   private void Update() {
+       textIsReversing.text = gameManager.isRecording  ? "live : " + GameManager.Instance.elpasedTime  : "past";
    }
 
    public void switchTimeReversing() {

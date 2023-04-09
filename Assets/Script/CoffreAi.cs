@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class CoffreAi : MonoBehaviour
 {
-    [SerializeField] private float timeBeforeDrop = 3.0f;
-    [SerializeField] private Transform targetInAir;
     private Rigidbody rigidbody;
 
     private void Start() {

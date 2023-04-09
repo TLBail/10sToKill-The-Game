@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public List<GameEvent> events = new List<GameEvent>();
     public Vector3 impactPosition;
 
+    public float elpasedTime = 0f;
     
     public static GameManager Instance
     {
@@ -39,11 +40,13 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public Action slowDownFactorChange;
     [SerializeField] private float _slodownFactor = 0.05f;
     IEnumerator DoSlowMotion() {
         slowdowFactor = 0.05f;
         
         isRecording = true;
+        elpasedTime = 0f;
         yield return new WaitForSeconds(10f);
         isRecording = false;
     }
@@ -57,8 +60,9 @@ public class GameManager : MonoBehaviour
         set
         {
             _slodownFactor = value;
-            //Time.timeScale = _slodownFactor;
-            //Time.fixedDeltaTime = 0.02f * Time.timeScale;
+            Time.timeScale = _slodownFactor;
+            Time.fixedDeltaTime = 0.02f * Time.timeScale * (1f/ 10f);
+            slowDownFactorChange?.Invoke();
         }
     }
 
@@ -80,7 +84,6 @@ public class GameManager : MonoBehaviour
     
     public Action onRecordTime;
     private bool _isRecording = false;
-    public float timeRecorded = 0f;
     
 
     private void FixedUpdate() {
@@ -92,7 +95,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
+    private void Update() {
+        if (isRecording) {
+            elpasedTime += Time.deltaTime;
+        }
+    }
+    
     public bool isRecording
     {
         get
@@ -105,6 +113,7 @@ public class GameManager : MonoBehaviour
             onRecordTime?.Invoke();
             if (_isRecording == false) {
                 timeIndex = 0;
+                slowdowFactor = 1f;
             }
         }
     }
