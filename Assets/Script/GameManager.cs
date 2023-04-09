@@ -57,8 +57,8 @@ public class GameManager : MonoBehaviour
         set
         {
             _slodownFactor = value;
-            Time.timeScale = _slodownFactor;
-            Time.fixedDeltaTime = 0.02f * Time.timeScale;
+            //Time.timeScale = _slodownFactor;
+            //Time.fixedDeltaTime = 0.02f * Time.timeScale;
         }
     }
 
