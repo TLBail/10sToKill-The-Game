@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
         new GameEventCoupeDuMonde(),
         new GameEventBraquage(),
         new GameEventEngraisAutoriser(),
+        new GameEventLapinTueur()
     };
 
     public List<GameEvent> selectedGameEvents = new List<GameEvent>();
@@ -128,7 +129,9 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    
+
+    public bool isTheEnd { get; set; }
+
     public int timeIndex = 0;
 
 

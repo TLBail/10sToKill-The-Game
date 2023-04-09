@@ -29,6 +29,7 @@ public class EventManager : MonoBehaviour
     [SerializeField] private BulletController bulletController;
     [SerializeField] private Object prefabCollisionWall;
     [SerializeField] private List<GameObject> gameObjectsFamous;
+    [SerializeField] private MenuUtils menuUtils;
 
     public Dictionary<string, GameObject> famousGameObjectDictionary = new Dictionary<string, GameObject>();
     public Dictionary<string, Transform> impactPositionDictionary = new Dictionary<string, Transform>();
@@ -145,4 +146,10 @@ public class EventManager : MonoBehaviour
     public void setActiveFamousGameObject(string name, bool active) {
         famousGameObjectDictionary[name]?.SetActive(active);
     }
+
+
+    public void fin() {
+        uiInRecording.SetActive(false);
+        menuUtils.fin();
+    }   
 }

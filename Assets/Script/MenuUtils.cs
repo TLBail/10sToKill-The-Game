@@ -19,6 +19,7 @@ public class MenuUtils : MonoBehaviour
    [SerializeField] private GameObject uiSelectEvents;
    [SerializeField] private EventManager eventManager;
    [SerializeField] private Button buttonRestart;
+   [SerializeField] private GameObject finalText;
 
    public float elapsedTime = 0;
    private void Start() {
@@ -101,5 +102,10 @@ public class MenuUtils : MonoBehaviour
    public void restartGame() {
        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
    }
-   
+
+   public void fin() {
+       gameManager.isPlayingRecord = 1;
+       gameManager.isTheEnd = true;
+       finalText.SetActive(true);
+   }
 }
