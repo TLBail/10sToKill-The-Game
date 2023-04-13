@@ -24,4 +24,8 @@ public class GameEventLapinTueur : GameEvent
             },
         };
     }
+
+    public override void triggerEvent(EventManager eventManager) {
+        eventManager.setActiveFamousGameObject("rabbit", true);
+    }
 }
