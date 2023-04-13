@@ -70,6 +70,7 @@ public class MenuUtils : MonoBehaviour
    private void Update() {
        textIsReversing.text = gameManager.isRecording  ? "live : " + GameManager.Instance.elpasedTime  : "past";
        elapsedTime += Time.deltaTime;
+       buttonRestart.gameObject.GetComponentInChildren<TMP_Text>().text = "restart "+ (buttonRestart.interactable ?"" : (10 - (int)elapsedTime)) ;
        buttonRestart.interactable = elapsedTime > 10;
    }
 

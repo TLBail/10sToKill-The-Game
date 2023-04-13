@@ -15,7 +15,7 @@ public class GameEventLapinTueur : GameEvent
         {
             new SubEvent()
             {
-                Position = new Vector3(0, 0, -470f),
+                Position = new Vector3(0, 0, -530.26f),
                 Action = () =>
                 {
                     eventManager.stopRecord();
